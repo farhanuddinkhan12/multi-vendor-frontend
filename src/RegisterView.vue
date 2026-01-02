@@ -1,60 +1,148 @@
 <template>
-    <div class="flex justify-center items-center min-h-screen bg-gray-100">
-        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-2xl font-semibold text-center mb-4">Register</h2>
-        
-            <form @submit.prevent="register">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium">Name</label>
-                    <input v-model="name" type="text" class="w-full p-2 border rounded-md" required />
-                </div>
-                <div class="mb-4">
-                <label class="block text-sm font-medium">Email</label>
-                <input v-model="email" type="email" class="w-full p-2 border rounded-md" required />
-                </div>
-                <div class="mb-4">
-                <label class="block text-sm font-medium">Password</label>
-                <input v-model="password" type="password" class="w-full p-2 border rounded-md" required />
-                </div>
+  <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-white to-emerald-50 px-4">
+    <div class="w-full max-w-md bg-white/80 backdrop-blur-xl shadow-2xl rounded-2xl p-8 border border-gray-100">
+      
+      <!-- Logo / Header -->
+      <div class="text-center">
+        <img
+          src="https://www.svgrepo.com/show/375698/user-add.svg"
+          alt="Register Icon"
+          class="mx-auto h-16 w-16 mb-4 drop-shadow-md"
+        />
+        <h2 class="text-3xl font-bold text-gray-800">Create an Account ✨</h2>
+        <p class="text-gray-500 text-sm mt-2">
+          Already have an account?
+          <button
+            @click="goToLogin"
+            class="text-emerald-600 hover:text-emerald-800 font-medium transition"
+          >
+            Sign in
+          </button>
+        </p>
+      </div>
 
-                <div class="mb-4">
-                <label class="block text-sm font-medium">Confirm Password</label>
-                <input v-model="password_confirmation" type="password" class="w-full p-2 border rounded-md" required />
-                </div>
-
-                <div class="mb-4">
-                <label class="block text-sm font-medium">Role</label>
-                <select v-model="role" class="w-full p-2 border rounded-md">
-                    <option value="customer">Customer</option>
-                    <option value="vendor">Vendor</option>
-                    <option value="admin">Admin</option>
-                </select>
-                </div>
-
-                <div v-if="role === 'vendor'">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium">Store Name</label>
-                    <input v-model="store_name" type="text" class="w-full p-2 border rounded-md" required />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium">Address</label>
-                    <input v-model="address" type="text" class="w-full p-2 border rounded-md" required />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium">Phone Number</label>
-                    <input v-model="phone_number" type="text" class="w-full p-2 border rounded-md" required />
-                </div>
-                </div>
-
-                <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">
-                Register
-                </button>
-            </form>
-
-            <p v-if="errorMessage" class="text-red-500 mt-2 text-center">{{ errorMessage }}</p>
-      <p v-if="successMessage" class="text-green-500 mt-2 text-center">{{ successMessage }}</p>
+      <!-- Form -->
+      <form @submit.prevent="register" class="mt-8 space-y-5">
+        <!-- Name -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+          <input
+            v-model="name"
+            type="text"
+            placeholder="John Doe"
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition"
+          />
         </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+          <input
+            v-model="email"
+            type="email"
+            placeholder="user@example.com"
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition"
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+            <input
+              v-model="password"
+              type="password"
+              placeholder="••••••••"
+              required
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition"
+            />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Confirm</label>
+            <input
+              v-model="password_confirmation"
+              type="password"
+              placeholder="••••••••"
+              required
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition"
+            />
+          </div>
+        </div>
+
+        <!-- Role -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Select Role</label>
+          <select
+            v-model="role"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition"
+          >
+            <option value="customer">Customer</option>
+            <option value="vendor">Vendor</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+
+        <!-- Vendor Section -->
+        <transition name="fade">
+          <div v-if="role === 'vendor'" class="border-t pt-4 mt-2">
+            <h3 class="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+              <span>🏪</span> Vendor Details
+            </h3>
+
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Store Name</label>
+                <input
+                  v-model="store_name"
+                  type="text"
+                  placeholder="My Store"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                <input
+                  v-model="address"
+                  type="text"
+                  placeholder="123 Main Street"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                <input
+                  v-model="phone_number"
+                  type="text"
+                  placeholder="+92 300 1234567"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 outline-none transition"
+                />
+              </div>
+            </div>
+          </div>
+        </transition>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 rounded-lg shadow-lg hover:shadow-xl transition duration-200"
+        >
+          Register
+        </button>
+
+        <!-- Messages -->
+        <p v-if="errorMessage" class="text-red-500 text-sm text-center mt-3">
+          {{ errorMessage }}
+        </p>
+        <p v-if="successMessage" class="text-green-500 text-sm text-center mt-3">
+          {{ successMessage }}
+        </p>
+      </form>
     </div>
+  </div>
 </template>
 
 <script>
@@ -109,9 +197,14 @@ import { mapActions } from 'vuex';
     }
 </script>
 
-<style>
-    input, select {
-        outline:none;
-        border: 1px solid #ccc;
-    }
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-5px);
+}
 </style>
