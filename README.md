@@ -1,24 +1,15 @@
-# vendor-management-system
+# Multivendor E-commerce Frontend (Vue.js)
 
-## Project setup
-```
-npm install
-```
+A modern, responsive storefront and dashboard built with Vue.js 3 and Tailwind CSS.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Key Features:
+- **Dynamic Dashboards:** Dedicated interfaces for Admin, Vendor, and Customers.
+- **State Management:** Used Vuex/Pinia for centralized Cart and Auth handling.
+- **Payment Flow:** Seamless integration with PayPal Success/Cancel redirects.
+- **Responsive Design:** Styled with Tailwind CSS for all device sizes.
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Tech Stack:
+- Vue.js 3
+- Tailwind CSS
+- Axios (API Integration)
+- Vue Router
